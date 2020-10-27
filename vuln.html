@@ -1,9 +1,10 @@
 <html>
 <body>
-<p>Hi</p>
+<p>Service ID: 
+<div id="demo"></div>
+</p>
 </body>
 <script>
-  //not vuln yet
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
 
@@ -13,6 +14,8 @@
   if (id != undefined) {
   	const VulnerableVariable = 'id_' + id;
   	console.log(VulnerableVariable);
+        document.getElementById("demo").innerHTML = VulnerableVariable;
   }
 </script>
 </html>
+
