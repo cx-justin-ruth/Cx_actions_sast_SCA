@@ -2,12 +2,17 @@
 <body>
 <p>Hi</p>
 </body>
-
 <script>
-//Change this to jquery later for SCA.
-var a = 'My Vulnerable Query String ' + window.location.search;
+  //not vuln yet
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  const id = urlParams.get('id');
+  console.log(id);
+  
+  if (id != undefined) {
+  	const VulnerableVariable = 'id_' + id;
+  	console.log(VulnerableVariable);
+  }
 </script>
-
-
 </html>
-
