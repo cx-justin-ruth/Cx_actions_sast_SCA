@@ -6,10 +6,11 @@ name: CxFlow
 # events but only for the master branch
 on:
   push:
-    branches: [ master, main ]
+    #branches: [ master, main ]
+    branches: [ nawdawg ]
   pull_request:
-    branches: [ master, main ]
-
+    #branches: [ master, main ]
+    branches: [ nawdawg ]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel - this job is specifically configured to use the Checkmarx CxFlow Action
 jobs:
   # This workflow contains a single job called "build"
@@ -26,7 +27,7 @@ jobs:
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.0
       with:
         project: GithubActionTest_merge_PR
-        team: '\CxServer\SP\Checkmarx'
+        team: '/CxServer'
         checkmarx_url: ${{ secrets.CHECKMARX_URL }}
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
