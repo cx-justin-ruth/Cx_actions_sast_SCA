@@ -1,21 +1,16 @@
-# This is a basic workflow to help you get started with Using Checkmarx CxFlow Action
-name: CxFlow push and pull
+# This action is meant to illistrate an incremental scan on PR.
+name: CxFlow incremental scan on PR
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: [ master, main ]
-    #branches: [ nawdawg ]
   pull_request:
     branches: [ master, main ]
-    #branches: [ nawdawg ]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel - this job is specifically configured to use the Checkmarx CxFlow Action
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on - Ubuntu is required as Docker is leveraged for the action
     runs-on: ubuntu-latest
-
     # Steps require - checkout code, run CxFlow Action, Upload SARIF report (optional)
     steps:
     - name: Get the Organization Name
@@ -26,7 +21,7 @@ jobs:
     - name: Checkmarx CxFlow Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.0-9.x
       with:
-        project: GithubActionTest_merge_PR
+        project: jr_${{ github.event.repository.name }}
         team: '/CxServer'
         checkmarx_url: ${{ secrets.CHECKMARX_URL }}
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
@@ -34,4 +29,4 @@ jobs:
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
     # Github PR issues
         github_token: ${{ secrets.GH_TOKEN }}
-        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ github.event.repository.name }}  --branch=${{ github.head_ref }} --bug-tracker=GITHUBPULL --cxflow.bug-tracker=GitHub --merge-id=${{ github.event.number }}
+        params: --cxflow.enabled-vulnerability-scanners=sast --cxflow.enabled-vulnerability-scanners=sca --sca.appUrl=https://sca.scacheckmarx.com --sca.apiUrl=https://api.scacheckmarx.com --sca.accessControlUrl=https://platform.checkmarx.net --sca.tenant=${{ secrets.CHECKMARX_SCA_ACCOUNT }} --sca.username=${{ secrets.CHECKMARX_SCA_USER }} --sca.password=${{ secrets.CHECKMARX_SCA_PASSWORD }} --checkmarx.incremental=true --checkmarx.scan-preset=High_and_Medium --namespace=${{ env.ORG_NAME }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.head_ref }} --bug-tracker=GITHUBPULL --merge-id=${{ github.event.number }}
