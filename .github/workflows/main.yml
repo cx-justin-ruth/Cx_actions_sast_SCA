@@ -20,6 +20,8 @@ jobs:
 
     # Steps require - checkout code, run CxFlow Action, Upload SARIF report (optional)
     steps:
+    - name: Get the Organization Name
+      run: echo ::set-env name=ORG_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     # Runs the Checkmarx Scan leveraging the latest version of CxFlow - REFER to Action README for list of inputs
@@ -34,4 +36,4 @@ jobs:
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
     # Github PR issues
         github_token: ${{ secrets.GH_TOKEN }}
-        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ env.REPO_NAME }}  --branch=${{ github.head_ref }} --bug-tracker=GITHUBPULL --merge-id=${{ env.PR_NUMBER }}
+        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ github.repository }}  --branch=${{ github.head_ref }} --bug-tracker=GITHUBPULL --merge-id=${{ github.event.number }}
