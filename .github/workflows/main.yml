@@ -33,4 +33,4 @@ jobs:
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
     # Github PR issues
         github_token: ${{ secrets.GH_TOKEN }}
-        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ env.REPO_NAME }}  --branch=${{ github.head_ref }} --bug-tracker=GITHUB --merge-id=${{ env.PR_NUMBER }}
+        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ env.REPO_NAME }}  --branch=${{ github.head_ref }} --bug-tracker=GITHUBPULL --merge-id=${{ env.PR_NUMBER }}
