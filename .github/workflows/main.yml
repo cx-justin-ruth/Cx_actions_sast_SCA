@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Using Checkmarx CxFlow Action
 
-name: CxFlow
+name: CxFlow push and pull
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -32,6 +32,6 @@ jobs:
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
-    # Upload the Report for CodeQL/Security Alerts
+    # Github PR issues
         github_token: ${{ secrets.GH_TOKEN }}
-        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ env.REPO_NAME }}  --branch=${{ github.head_ref }} --bug-tracker=GITHUB --merge-id=${{ env.PR_NUMBER }}
+        params: --namespace=${{ env.ORG_NAME }} --repo-name=${{ env.REPO_NAME }}  --branch=${{ github.head_ref }} --cxflow.bug-tracker=GitHub --merge-id=${{ env.PR_NUMBER }}
